@@ -38,7 +38,12 @@ num_phases = len(PHASES)
 origin = 0
 
 # User Defined Functions
-def rotate(i: int, j: int) -> None:   #i = steps of 1.8 deg, j = 1 --> cw, j = -1 --> ccw
+def rotate(x: int) -> None:   #i = steps of 1.8 deg, j = 1 --> cw, j = -1 --> ccw
+    if x >= 0:
+        j = 1
+    else:
+        j = -1
+    i = abs(x)
     global PHASES, pins_motor, num_phases, phase_num, delay, origin
     old_time = time.time_ns()
     counter = 0
