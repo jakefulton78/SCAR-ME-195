@@ -1,15 +1,17 @@
 import math
 from os import system
-current_angles = [5, 5, 5, 5]
 ## recieve world coordinates
 def motors(Px,Py):
     global current_angles
 ## calculate angle for each motor
-    L2 = 150
+    L2 = 120
     L3 = 100
     h1 = 120 # height up to link2 rotation
     h2 = 100 # from link5 rotation to gripper tip
     Ph = math.sqrt(Px**2+Py**2)
+    
+    dif = math.sqrt(L2**2-(h2+L3-h1)**2)
+
     if h1 == h2:
         te = 0
     else:
@@ -31,16 +33,22 @@ def motors(Px,Py):
             elif Py < 0:
                 t1 = 3*math.pi/2
             else:
-                print('invalid')
+                return('invalid')
         elif Py == 0:
             if Px > 0:
                 t1 = 0
             elif Px < 0:
                 t1 = math.pi
             else:
-                print('invalid')
+                return('invalid')
         else:
-            print('invalid')
+            return('invalid')
+
+    if math.sqrt(Px**2+Py**2) <= dif:
+        return('invalid')
+    else:
+        None
+
     t2 = math.pi-math.acos((L2**2+Pr**2-L3**2)/(2*L2*Pr))-te
 
     t3 = math.pi-math.acos((L2**2-Pr**2+L3**2)/(2*L2*L3))
